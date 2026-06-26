@@ -22,7 +22,7 @@ async function connectDB(){
             throw error
         })
 
-        app.listen(process.env.PORT, () => {
+        app.listen(process.env.PORT || 8000, () => {
             console.log(`Database connected successfully! and App is listening on port ${process.env.PORT}`);
         })
     }
@@ -32,3 +32,5 @@ async function connectDB(){
     }
 }
 connectDB()
+
+

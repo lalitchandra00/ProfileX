@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+
+
 import dns from 'node:dns';
 // Fix for Node.js DNS resolution issues on some Windows machines
 dns.setServers(['8.8.8.8', '8.8.4.4']);
@@ -10,8 +12,8 @@ dotenv.config({
     path:'./.env'
 })
 
-import express from 'express';
-const app = express()
+
+import { app } from './app.js';
 
 async function connectDB(){
     try{
@@ -32,5 +34,6 @@ async function connectDB(){
     }
 }
 connectDB()
+
 
 

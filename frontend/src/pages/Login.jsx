@@ -6,14 +6,14 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const user_login_data = {
-        email : email,
-        password : password
+      email: email,
+      password: password
     }
 
-     try {
+    try {
       const response = await fetch('http://localhost:8000/api/login', {
         method: 'POST',
         headers: {
@@ -26,7 +26,7 @@ function Login() {
       if (response.ok && data.success) {
         navigate('/home');
       } else {
-        
+
         alert('Error logging in' + (data.message || 'Unknown error'));
       }
     } catch (err) {
@@ -44,7 +44,7 @@ function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-100 flex items-center justify-center p-6 relative overflow-hidden">
-      
+
       <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
       <div className="absolute top-[20%] right-[-10%] w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
       <div className="absolute bottom-[-20%] left-[20%] w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>

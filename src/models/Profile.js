@@ -2,13 +2,6 @@ import mongoose from "mongoose";
 
 const profileSchema = new mongoose.Schema(
   {
-    // Reference back to the main User account
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-      unique: true, // One-to-one relationship
-    },
 
     // Personal Details
     firstName: {

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 function Home() {
@@ -18,8 +19,8 @@ function Home() {
   const [CorrespondenceAddress, setCorrespondenceAddress] = useState('')
   const [PermanentAddress, setPermanentAddress] = useState('')
 
-  const inputClass = "border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-purple-500 w-full"
-  const labelClass = "text-sm font-medium text-gray-600 mb-1"
+  const inputClass = "w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-gray-50/50"
+  const labelClass = "block text-sm font-semibold text-gray-700 mb-1 ml-1"
   const genders = ["Male", "Female", "Other"];
 
 
@@ -71,23 +72,38 @@ function Home() {
   // Till here
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-100 to-purple-300 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex items-center justify-center p-6 relative overflow-hidden">
+      
 
-      <div className="w-full max-w-4xl">
-        <h1
-          className="text-4xl font-bold text-center text-purple-800 mb-6 font-display"
-          style={{ textShadow: '1px 3px 5px rgba(0,0,0,0.15)' }}
+      <div className="absolute top-0 right-0 p-6 z-50">
+        <Link 
+          to="/profile" 
+          className="bg-white/70 hover:bg-white text-purple-700 font-bold py-2 px-6 rounded-full shadow-[0_4px_14px_0_rgba(168,85,247,0.39)] border border-purple-100 transition-all duration-300 backdrop-blur-md hover:-translate-y-0.5"
         >
-          Welcome to User U
+          View Profile
+        </Link>
+      </div>
+
+
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-300/40 rounded-full mix-blend-multiply filter blur-[80px] animate-blob"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-pink-300/40 rounded-full mix-blend-multiply filter blur-[80px] animate-blob animation-delay-2000"></div>
+
+      <div className="w-full max-w-4xl relative z-10">
+        <h1
+          className="text-4xl font-extrabold text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-8 tracking-tight"
+        >
+          Welcome to ProfileX
         </h1>
 
         <div
-          className="bg-white rounded-2xl p-8"
-          style={{ boxShadow: '0px 8px 24px rgba(0,0,0,0.12)' }}
+          className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white"
         >
-          <h2 className="text-xl font-semibold text-gray-700 mb-6">Enter your details</h2>
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-bold text-gray-800">Enter your details</h2>
+            <span className="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full">Profile Setup</span>
+          </div>
 
-          <form className="flex flex-col gap-5">
+          <form className="flex flex-col gap-6">
 
 
             <p className="text-xs font-semibold uppercase tracking-widest text-purple-400">Personal Information</p>

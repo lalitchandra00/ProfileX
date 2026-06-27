@@ -40,39 +40,39 @@ app.post('/api/signup', async (req, res) => {
 
 
 app.post("/api/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
+        const user = await User.findOne({ email });
 
-    if (!user) {
-      return res.json({
-        success: false,
-        message: "No record existed",
-      });
+        if (!user) {
+            return res.json({
+                success: false,
+                message: "No record existed",
+            });
+        }
+
+        if (user.password !== password) {
+            return res.json({
+                success: false,
+                message: "The password is incorrect",
+            });
+        }
+
+        return res.json({
+            success: true,
+            message: "Success",
+            user,
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        return res.json({
+            success: false,
+            message: "Internal Server Error",
+        });
     }
-
-    if (user.password !== password) {
-      return res.json({
-        success: false,
-        message: "The password is incorrect",
-      });
-    }
-
-    return res.json({
-      success: true,
-      message: "Success",
-      user,
-    });
-
-  } catch (error) {
-    console.error(error);
-
-    return res.json({
-      success: false,
-      message: "Internal Server Error",
-    });
-  }
 });
 
 export { app }

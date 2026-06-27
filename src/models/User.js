@@ -21,13 +21,8 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-    },
-
-    // Reference to the user's detailed profile
-    profile: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Profile",
     }
+
   },
   {
     timestamps: true,

@@ -1,3 +1,9 @@
+// limitations :
+// 1. The user and profile is not connected so it is creating problem in making it dynamic website 
+// 2. authentication is not used properly by using middlewares
+// 3. edit option is not available
+
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 

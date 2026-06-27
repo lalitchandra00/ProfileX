@@ -24,6 +24,9 @@ function Login() {
       });
       const data = await response.json();
       if (response.ok && data.success) {
+        // Save who's logged in so other pages know which user this is
+        localStorage.setItem('userId', data.userId);
+        
         navigate('/home');
       } else {
 

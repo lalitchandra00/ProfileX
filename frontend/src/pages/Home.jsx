@@ -28,10 +28,11 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
+    const userId = localStorage.getItem('userId');
 
 
     const userData = {
+      userId,
       firstName: FirstName,
       lastName: LastName,
       email: Email,
@@ -73,11 +74,11 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex items-center justify-center p-6 relative overflow-hidden">
-      
+
 
       <div className="absolute top-0 right-0 p-6 z-50">
-        <Link 
-          to="/profile" 
+        <Link
+          to="/profile"
           className="bg-white/70 hover:bg-white text-purple-700 font-bold py-2 px-6 rounded-full shadow-[0_4px_14px_0_rgba(168,85,247,0.39)] border border-purple-100 transition-all duration-300 backdrop-blur-md hover:-translate-y-0.5"
         >
           View Profile

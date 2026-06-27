@@ -20,8 +20,20 @@ app.use(cookieParser())
 // AI coded this part
 app.post('/api/home', async (req, res) => {
     try {
-        const newProfile = await Profile.create(req.body);
-        res.json({ success: true, data: newProfile });
+        const { userId, ...profileData } = req.body;
+
+        if (!userId) {
+            return res.json({ success: false, message: 'Not logged in. Please login first.' });
+        }
+
+        // upsert: update existing profile or create new one — linked to this user
+        const profile = await Profile.findOneAndUpdate(
+            { user: userId },
+            { ...profileData, user: userId },
+            { new: true, upsert: true, runValidators: true }
+        );
+
+        res.json({ success: true, data: profile });
     } catch (error) {
         res.json({ success: false, message: error.message });
     }
@@ -30,8 +42,13 @@ app.post('/api/home', async (req, res) => {
 
 app.get('/api/profile', async (req, res) => {
     try {
-        // Just grab the latest profile created in the DB since there is no user link
-        const profile = await Profile.findOne().sort({ _id: -1 }); 
+        const { userId } = req.query;
+
+        if (!userId) {
+            return res.json({ success: false, message: 'Not logged in.' });
+        }
+
+        const profile = await Profile.findOne({ user: userId });
         res.json({ success: true, data: profile });
     } catch (error) {
         res.json({ success: false, message: error.message });
@@ -63,7 +80,8 @@ app.post("/api/login", async (req, res) => {
             });
         }
 
-        if (user.password !== password) {
+        const isValid = await user.isPasswordCorrect(password);
+        if (!isValid) {
             return res.json({
                 success: false,
                 message: "The password is incorrect",
@@ -73,7 +91,8 @@ app.post("/api/login", async (req, res) => {
         return res.json({
             success: true,
             message: "Success",
-            user,
+            userId: user._id,   
+            username: user.username,
         });
 
     } catch (error) {

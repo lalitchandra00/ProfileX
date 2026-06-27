@@ -2,6 +2,14 @@ import mongoose, {Schema} from "mongoose";
 
 const profileSchema = new mongoose.Schema(
   {
+    // Link to the User who owns this profile
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: true,   
+    },
+
 
     // Personal Details
     firstName: {

@@ -6,14 +6,21 @@ function Profile() {
 
   useEffect(() => {
     const fetchProfile = async () => {
+      const userId = localStorage.getItem('userId');
+
+      if (!userId) {
+        console.error("Not logged in — no userId in localStorage");
+        return;
+      }
+
       try {
-        const response = await fetch('http://localhost:8000/api/profile');
+        const response = await fetch(`http://localhost:8000/api/profile?userId=${userId}`);
         const data = await response.json();
         
         if (response.ok && data.success && data.data) {
           setProfile(data.data);
         } else {
-          console.error("Error fetching profile");
+          console.error("Error fetching profile:", data.message);
         }
       } catch (err) {
         console.error("Network error", err);

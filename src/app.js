@@ -26,6 +26,17 @@ app.post('/api/home', async (req, res) => {
         res.json({ success: false, message: error.message });
     }
 });
+
+
+app.get('/api/profile', async (req, res) => {
+    try {
+        // Just grab the latest profile created in the DB since there is no user link
+        const profile = await Profile.findOne().sort({ _id: -1 }); 
+        res.json({ success: true, data: profile });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+});
 // Till here
 
 

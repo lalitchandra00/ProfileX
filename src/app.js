@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import Profile from './models/Profile.js'
-import User from './models/User.js'
+import {Profile} from './models/Profile.models.js'
+import {User} from './models/User.models.js'
 
 const app = express()
 

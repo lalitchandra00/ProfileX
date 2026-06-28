@@ -33,6 +33,20 @@ function Profile() {
   const labelClass = "block text-sm font-semibold text-gray-700 mb-1 ml-1";
   const textClass = "w-full rounded-xl border border-gray-200 bg-gray-100 px-4 py-3 text-sm text-gray-800 min-h-[44px] flex items-center";
 
+
+  let resumeContent;
+  if (profile.resumePdfUrl) {
+    resumeContent = (
+      <a href={profile.resumePdfUrl} target="_blank" className={textClass + " text-purple-600 underline"}>
+        View Resume
+      </a>
+    );
+  } else {
+    resumeContent = (
+      <div className={textClass}>No resume uploaded</div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center p-6 relative overflow-hidden">
       
@@ -139,6 +153,13 @@ function Profile() {
             <div className="flex flex-col">
               <label className={labelClass}>Work / Occupation</label>
               <div className={textClass}>{profile.work}</div>
+            </div>
+
+            <p className="text-xs font-semibold uppercase tracking-widest text-purple-400 mt-2">Resume</p>
+
+            <div className="flex flex-col">
+              <label className={labelClass}>Resume / CV</label>
+              {resumeContent}
             </div>
 
           </div>

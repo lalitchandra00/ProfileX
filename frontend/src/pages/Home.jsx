@@ -368,7 +368,6 @@ function Home() {
               />
             </div>
 
-            {/* Resume / PDF Upload */}
             <div className="flex flex-col gap-2">
               <label className={labelClass}>Resume / CV (PDF only, max 5MB)</label>
               <div className="flex items-center gap-3">

@@ -18,11 +18,13 @@ function Home() {
   const [Work, setWork] = useState('')
   const [CorrespondenceAddress, setCorrespondenceAddress] = useState('')
   const [PermanentAddress, setPermanentAddress] = useState('')
+  const [resumePdf, setResumePdf] = useState(null)
+  const [pdfUploading, setPdfUploading] = useState(false)
+  const [pdfUrl, setPdfUrl] = useState('')
 
   const inputClass = "w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all duration-200 bg-gray-50/50"
   const labelClass = "block text-sm font-semibold text-gray-700 mb-1 ml-1"
   const genders = ["Male", "Female", "Other"];
-
 
   //Ai coded this part
   const handleSubmit = async (e) => {
@@ -70,6 +72,42 @@ function Home() {
       alert('Network error. Is the backend running?');
     }
   };
+
+  const handlePdfUpload = async () => {
+    if (!resumePdf) {
+      alert('Please select a PDF file first.');
+      return;
+    }
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      alert('Not logged in.');
+      return;
+    }
+
+    setPdfUploading(true);
+    const formData = new FormData();
+    formData.append('resumePdf', resumePdf);
+    formData.append('userId', userId);
+
+    try {
+      const response = await fetch('http://localhost:8000/api/upload-pdf', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.success) {
+        setPdfUrl(data.pdfUrl);
+        alert('Resume uploaded successfully!');
+      } else {
+        alert('Upload failed: ' + (data.message || 'Unknown error'));
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Network error during PDF upload.');
+    } finally {
+      setPdfUploading(false);
+    }
+  };
   // Till here
 
   return (
@@ -78,12 +116,24 @@ function Home() {
 
       <div className="absolute top-0 right-0 p-6 z-50">
         <Link
+          to="/login"
+          className="bg-white/70 hover:bg-white text-purple-700 font-bold py-2 px-6 rounded-full shadow-[0_4px_14px_0_rgba(168,85,247,0.39)] border border-purple-100 transition-all duration-300 backdrop-blur-md hover:-translate-y-0.5"
+        >
+          Logout
+        </Link>
+      </div>
+
+
+      <div className="absolute top-0 right-30 p-6 z-50">
+        <Link
           to="/profile"
           className="bg-white/70 hover:bg-white text-purple-700 font-bold py-2 px-6 rounded-full shadow-[0_4px_14px_0_rgba(168,85,247,0.39)] border border-purple-100 transition-all duration-300 backdrop-blur-md hover:-translate-y-0.5"
         >
           View Profile
         </Link>
       </div>
+
+      
 
 
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-300/40 rounded-full mix-blend-multiply filter blur-[80px] animate-blob"></div>
@@ -316,6 +366,30 @@ function Home() {
                 placeholder="example: Software Engineer"
                 className={inputClass}
               />
+            </div>
+
+            {/* Resume / PDF Upload */}
+            <div className="flex flex-col gap-2">
+              <label className={labelClass}>Resume / CV (PDF only, max 5MB)</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="file"
+                  accept="application/pdf"
+                  className={inputClass}
+                  onChange={(e) => {
+                    setResumePdf(e.target.files[0] || null);
+                    setPdfUrl('');
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={handlePdfUpload}
+                  disabled={pdfUploading || !resumePdf}
+                  className="px-4 py-2.5 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-300 text-white text-sm font-semibold rounded-xl transition-colors duration-200 whitespace-nowrap"
+                >
+                  Upload
+                </button>
+              </div>
             </div>
 
 

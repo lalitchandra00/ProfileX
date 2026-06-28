@@ -66,6 +66,12 @@ const profileSchema = new mongoose.Schema(
     permanentAddress: {
       type: String,
     },
+
+   
+    resumePdfUrl: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

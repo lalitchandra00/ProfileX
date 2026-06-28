@@ -3,6 +3,8 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import {Profile} from './models/Profile.models.js'
 import {User} from './models/User.models.js'
+import { upload } from './middlewares/multer.middlewares.js'
+import { uploadOnCloudinary } from './utils/cloudinary.js'
 
 const app = express()
 
@@ -35,6 +37,40 @@ app.post('/api/home', async (req, res) => {
 
         res.json({ success: true, data: profile });
     } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+});
+
+
+// PDF upload — multer saves file locally, then uploads to Cloudinary, URL stored in Profile
+app.post('/api/upload-pdf', upload.single('resumePdf'), async (req, res) => {
+    try {
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.json({ success: false, message: 'Not logged in. Please login first.' });
+        }
+
+        if (!req.file) {
+            return res.json({ success: false, message: 'No PDF file uploaded.' });
+        }
+
+        const cloudinaryResponse = await uploadOnCloudinary(req.file.path);
+
+        if (!cloudinaryResponse) {
+            return res.json({ success: false, message: 'Failed to upload PDF to Cloudinary.' });
+        }
+
+        // Save URL into the Profile document
+        const profile = await Profile.findOneAndUpdate(
+            { user: userId },
+            { resumePdfUrl: cloudinaryResponse.url, user: userId },
+            { new: true, upsert: true }
+        );
+
+        res.json({ success: true, pdfUrl: cloudinaryResponse.url, data: profile });
+    } catch (error) {
+        console.error('PDF upload error:', error);
         res.json({ success: false, message: error.message });
     }
 });

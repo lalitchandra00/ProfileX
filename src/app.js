@@ -94,7 +94,17 @@ app.get('/api/profile', async (req, res) => {
 
 
 app.post('/api/signup', async (req, res) => {
+
     try {
+        const { email, username} = req.body;
+        const existedUser = User.findOne({email}, {username})
+        if (existedUser) {
+           return res.json({
+                success: false,
+                message: "Username or Email already existed",
+            });
+        }
+
         const newUser = await User.create(req.body);
         res.json({ success: true, data: newUser });
     } catch (error) {

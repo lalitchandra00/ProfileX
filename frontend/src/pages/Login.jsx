@@ -14,7 +14,7 @@ function Login() {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/login`, {
+      const response = await fetch('http://localhost:8000/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ function Login() {
       if (response.ok && data.success) {
         // Save who's logged in so other pages know which user this is
         localStorage.setItem('userId', data.userId);
-        
+
         navigate('/home');
       } else {
 

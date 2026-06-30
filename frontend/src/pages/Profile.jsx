@@ -16,7 +16,7 @@ function Profile() {
       try {
         const response = await fetch(`http://localhost:8000/api/profile?userId=${userId}`);
         const data = await response.json();
-        
+
         if (response.ok && data.success && data.data) {
           setProfile(data.data);
         } else {
@@ -49,12 +49,12 @@ function Profile() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 flex flex-col items-center p-6 relative overflow-hidden">
-      
+
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-300/40 rounded-full mix-blend-multiply filter blur-[80px] animate-blob"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-pink-300/40 rounded-full mix-blend-multiply filter blur-[80px] animate-blob animation-delay-2000"></div>
 
       <div className="w-full max-w-4xl relative z-10 mt-6 sm:mt-10">
-        
+
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
             <h2 className="text-2xl font-bold text-gray-800">Your Profile Details</h2>
@@ -62,7 +62,7 @@ function Profile() {
               Edit Profile
             </Link>
           </div>
-          
+
           <div className="flex flex-col gap-6">
 
             <p className="text-xs font-semibold uppercase tracking-widest text-purple-400">Personal Information</p>

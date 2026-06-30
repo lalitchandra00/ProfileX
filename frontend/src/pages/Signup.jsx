@@ -1,7 +1,5 @@
 // limitations :
-// 1. The user and profile databases are not connected so it is creating problem in making it dynamic website 
-// 2. Authentication is not used properly by using middlewares
-// 3. edit option is not good enough need to upgrade
+// 1. edit option is not good enough need to upgrade
 
 
 import { useState } from 'react';

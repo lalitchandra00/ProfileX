@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import {Profile} from './models/Profile.models.js'
-import {User} from './models/User.models.js'
+import { Profile } from './models/Profile.models.js'
+import { User } from './models/User.models.js'
 import { upload } from './middlewares/multer.middlewares.js'
 import { uploadOnCloudinary } from './utils/cloudinary.js'
 
@@ -96,12 +96,14 @@ app.get('/api/profile', async (req, res) => {
 app.post('/api/signup', async (req, res) => {
 
     try {
-        const { email, username} = req.body;
-        const existedUser = User.findOne({email}, {username})
+        const { email, username } = req.body;
+        const existedUser = await User.findOne({
+            $or: [{ username }, { email }]
+        });
         if (existedUser) {
-           return res.json({
+            return res.json({
                 success: false,
-                message: "Username or Email already existed",
+                message: "Username or Email already exists",
             });
         }
 
@@ -137,7 +139,7 @@ app.post("/api/login", async (req, res) => {
         return res.json({
             success: true,
             message: "Success",
-            userId: user._id,   
+            userId: user._id,
             username: user.username,
         });
 

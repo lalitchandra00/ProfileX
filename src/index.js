@@ -24,9 +24,11 @@ async function connectDB(){
             throw error
         })
 
-        app.listen(process.env.PORT || 8000, () => {
-            console.log(`Database connected successfully! and App is listening on port ${process.env.PORT}`);
-        })
+        if (!process.env.VERCEL) {
+            app.listen(process.env.PORT || 8000, () => {
+                console.log(`Database connected successfully! and App is listening on port ${process.env.PORT}`);
+            })
+        }
     }
     catch (error){
         console.error("Error:", error);
@@ -34,6 +36,6 @@ async function connectDB(){
     }
 }
 connectDB()
-
+export default app;
 
 

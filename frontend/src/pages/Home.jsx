@@ -53,7 +53,7 @@ function Home() {
     };
 
     try {
-      const response = await fetch('http://localhost:8000/api/home', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/home`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ function Home() {
     formData.append('userId', userId);
 
     try {
-      const response = await fetch('http://localhost:8000/api/upload-pdf', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/upload-pdf`, {
         method: 'POST',
         body: formData,
       });

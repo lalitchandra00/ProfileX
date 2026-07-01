@@ -53,7 +53,7 @@ function Home() {
     };
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/home`, {
+      const response = await fetch(`http://localhost:8000'}/api/home`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

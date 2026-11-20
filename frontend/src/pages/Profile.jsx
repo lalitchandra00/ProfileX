@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../lib/config';
 
 function Profile() {
   const [profile, setProfile] = useState({});
@@ -14,7 +15,7 @@ function Profile() {
       }
 
       try {
-        const response = await fetch(`http://localhost:8000/api/profile?userId=${userId}`);
+        const response = await fetch(`${API_BASE_URL}/api/profile?userId=${userId}`);
         const data = await response.json();
 
         if (response.ok && data.success && data.data) {

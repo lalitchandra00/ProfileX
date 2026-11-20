@@ -57,5 +57,34 @@ ProfileX/
 - `GET /api/profile`: Retrieve the authenticated user's profile data.
 - `POST /api/upload-pdf`: Upload a resume PDF to Cloudinary and link the URL to the user's profile.
 
+## 🤖 AI Assistant (local development only)
+
+A Gemini-powered LangGraph agent lives in `agents/`. It chats with the user and returns UI actions that React performs (`navigate`, `fill_form`, `open_resume_upload`, `profile_saved`).
+
+### Setup
+
+1. `python -m pip install -r agents/requirements.txt` (Python 3.10+)
+2. Put your Gemini API key in `agents/.env` as `GOOGLE_API_KEY=...`. `GEMINI_MODEL` and `BACKEND_URL` can stay empty (defaults: `gemini-2.5-flash-lite` and `http://localhost:8000`). `frontend/.env` can also stay empty (defaults: ports 8000 and 8001).
+3. Start the backend: `npm run dev`
+4. Start the frontend: `cd frontend && npm run dev`
+5. Start the agent from the project root: `python -m uvicorn agents.server:app --reload --port 8001`
+6. Check it: `curl http://localhost:8001/health`
+
+Log in first, then click **Ask Assistant** in the bottom-right corner. Try "open the profile page" or "fill the form with my details".
+
+### Tools in `agents/tools/`
+
+| Tool | Purpose |
+| --- | --- |
+| `get_my_profile` | Read saved profile data |
+| `fill_form` | Fill visible form fields |
+| `navigate` | Open an allowed page |
+| `ask_user` | Ask a missing detail via LangGraph interrupt |
+| `save_profile` | Save after confirmation |
+| `open_resume_upload` | Open the PDF file picker |
+| `summarize_profile` | Summarize saved data |
+
+Run checks with `python -m pytest agents/tests -q`, `npm run lint` (in `frontend/`), and `npm run build` (in `frontend/`).
+
 
 

@@ -27,6 +27,10 @@ const profileSchema = new mongoose.Schema(
       type: String,
       enum: ["Male", "Female", "Other"],
     },
+    email: {
+      type: String,
+      trim: true,
+    },
     phone1: {
       type: String,
     },

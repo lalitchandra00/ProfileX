@@ -59,7 +59,7 @@ ProfileX/
 
 ## 🤖 AI Assistant (local development only)
 
-A Gemini-powered LangGraph agent lives in `agents/`. It chats with the user and returns UI actions that React performs (`navigate`, `fill_form`, `open_resume_upload`, `profile_saved`).
+A Gemini-powered LangGraph agent lives in `agents/`. It chats with the user and returns UI actions that React performs (`navigate`, `fill_form`, `open_resume_upload`, `profile_saved`). Full documentation is in [`agents/README.md`](agents/README.md).
 
 ### Setup
 
